@@ -40,7 +40,7 @@ def send_email():
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = TO_EMAIL
 
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+    with smtplib.SMTP_SSL('smtp.163.com', 465) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
 
