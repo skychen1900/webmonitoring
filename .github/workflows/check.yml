@@ -33,5 +33,9 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add last_hash.txt
-          git commit -m "Update hash"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Update hash"
+            git push
+          else
+            echo "No changes to commit."
+          fi
