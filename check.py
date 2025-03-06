@@ -4,6 +4,7 @@ import hashlib
 import smtplib
 from email.mime.text import MIMEText
 import os
+import sys
 from dotenv import load_dotenv
 
 URL = "https://www.transitbus.co.jp/rosen/"
@@ -18,6 +19,19 @@ if os.getenv("GITHUB_ACTIONS") != "true":
 EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 TO_EMAIL = os.environ.get("TO_EMAIL")
+
+def validate_config():
+    missing = []
+    if not EMAIL_ADDRESS:
+        missing.append("EMAIL_ADDRESS")
+    if not EMAIL_PASSWORD:
+        missing.append("EMAIL_PASSWORD")
+    if not TO_EMAIL:
+        missing.append("TO_EMAIL")
+    
+    if missing:
+        print(f"❌ Missing required configurations: {', '.join(missing)}")
+        sys.exit(1)
 
 def get_page_hash():
     res = requests.get(URL)
@@ -52,6 +66,8 @@ def send_email():
         print(f"✅ メール送信完了: {TO_EMAIL}")
 
 def main():
+    validate_config()
+
     current_hash = get_page_hash()
     last_hash = load_last_hash()
     
