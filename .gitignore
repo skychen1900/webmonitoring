@@ -1,4 +1,3 @@
 # 環境ファイルはGit管理しない
 .env.*
 !*.sample
-last_hash.txt
