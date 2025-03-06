@@ -2,7 +2,7 @@ name: Check Update
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 毎時実行（調整可能）
+    - cron: '0 */12 * * *'  # 毎時実行（調整可能）
   workflow_dispatch:
 
 jobs:
