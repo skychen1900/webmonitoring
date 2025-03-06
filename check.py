@@ -16,9 +16,9 @@ if os.getenv("GITHUB_ACTIONS") != "true":
     print("Loading .env.development...")
     load_dotenv(".env.development")
 
-EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
-EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
-TO_EMAIL = os.environ.get("TO_EMAIL")
+EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+TO_EMAIL = os.getenv("TO_EMAIL")
 
 def validate_config():
     missing = []
