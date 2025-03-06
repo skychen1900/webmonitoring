@@ -4,11 +4,17 @@ import hashlib
 import smtplib
 from email.mime.text import MIMEText
 import os
+from dotenv import load_dotenv
 
 URL = "https://www.transitbus.co.jp/rosen/"
 STATE_FILE = "last_hash.txt"
 
-# メール設定（Gmailを例に）
+# メール設定
+# Actions実行時は環境変数が渡されるので.envは不要
+if os.getenv("GITHUB_ACTIONS") != "true":
+    print("Loading .env.development...")
+    load_dotenv(".env.development")
+
 EMAIL_ADDRESS = os.environ.get("EMAIL_ADDRESS")
 EMAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 TO_EMAIL = os.environ.get("TO_EMAIL")
@@ -43,6 +49,7 @@ def send_email():
     with smtplib.SMTP_SSL('smtp.163.com', 465) as smtp:
         smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         smtp.send_message(msg)
+        print(f"✅ メール送信完了: {TO_EMAIL}")
 
 def main():
     current_hash = get_page_hash()
